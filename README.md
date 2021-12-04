@@ -1,0 +1,1 @@
+# supabase-basic-auth-vue
