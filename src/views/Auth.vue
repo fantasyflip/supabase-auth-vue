@@ -4,7 +4,11 @@
       <v-col>
         <v-container>
           <v-row>
-            <v-col> Sign-Up </v-col>
+            <v-col>
+              <span class="text-h4 font-weight-bold primary--text"
+                >Sign-Up</span
+              >
+            </v-col>
           </v-row>
           <v-row>
             <v-col>
@@ -35,6 +39,7 @@
           <v-row>
             <v-col>
               <v-btn
+                color="primary"
                 :disabled="
                   register.password != register.password2 ||
                   register.password2 === '' ||
@@ -51,7 +56,9 @@
       <v-col>
         <v-container>
           <v-row>
-            <v-col> Login </v-col>
+            <v-col>
+              <span class="text-h4 font-weight-bold primary--text">Login</span>
+            </v-col>
           </v-row>
           <v-row>
             <v-col>
@@ -69,7 +76,10 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-btn :disabled="login.email === ''" @click="handleResetPassword"
+              <v-btn
+                color="primary"
+                :disabled="login.email === ''"
+                @click="handleResetPassword"
                 >Forgot Password</v-btn
               >
             </v-col>
@@ -77,6 +87,7 @@
           <v-row>
             <v-col>
               <v-btn
+                color="primary"
                 :disabled="login.password === '' || login.email === ''"
                 @click="handleLogIn"
                 >LogIn</v-btn
@@ -125,6 +136,9 @@ export default {
       console.log("USER: " + JSON.stringify(user));
       console.log("SESSION: " + JSON.stringify(session));
       console.log("ERROR: " + JSON.stringify(error));
+      if (user) {
+        this.$router.push({ path: "/" });
+      }
     },
     handleResetPassword: async function () {
       const { data, error } = supabase.auth.api.resetPasswordForEmail(

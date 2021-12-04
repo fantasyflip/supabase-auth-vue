@@ -1,27 +1,47 @@
 <template>
   <v-app>
     <v-main>
-      App
-      <Auth />
-      <Profile />
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Auth from "@/components/Auth";
-import Profile from "@/components/Profile";
 export default {
   name: "App",
-  components: {
-    Auth,
-    Profile,
-  },
   mounted() {
-    console.log(this.$route);
+    let hash = this.$route.hash;
+    // let hash =
+    //   "#access_token=eyJ...plGG6C-w&expires_in=60&refresh_token=q0Ckiw1kU427p6cx4HV0Sg&token_type=bearer&type=recovery";
+    if (hash.includes("type=recovery")) {
+      let accessToken = this.parseToParam("access_token=", "&", hash);
+
+      console.log(accessToken);
+      this.$router.push({
+        path: "resetPassword",
+        query: { token: accessToken },
+      });
+    }
   },
   data() {
     return {};
+  },
+  methods: {
+    parseToParam: function (startString, endString, stringToParse) {
+      let start = {
+        string: startString,
+        length: startString.length,
+      };
+      let end = {
+        string: endString,
+        length: endString.length,
+      };
+      let parsedValue = stringToParse.substring(
+        stringToParse.indexOf(start.string) + start.length,
+        stringToParse.indexOf(end.string)
+      );
+      return parsedValue;
+    },
   },
 };
 </script>
