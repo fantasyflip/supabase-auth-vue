@@ -120,7 +120,6 @@ export default {
   },
   methods: {
     handleSignUp: async function () {
-      console.log(JSON.stringify(this.register));
       const { user, session, error } = await supabase.auth.signUp({
         email: this.register.email,
         password: this.register.password,
@@ -130,7 +129,6 @@ export default {
       console.log("ERROR: " + JSON.stringify(error));
     },
     handleLogIn: async function () {
-      console.log(JSON.stringify(this.login));
       const { user, session, error } = await supabase.auth.signIn({
         email: this.login.email,
         password: this.login.password,
