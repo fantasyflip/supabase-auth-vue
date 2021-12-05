@@ -44,6 +44,11 @@ export default {
       newEmail: "",
     };
   },
+  mounted() {
+    if (this.$route.query.signup === "success") {
+      alert("Succesfully confirmed E-Mail!");
+    }
+  },
   methods: {
     getSession: async function () {
       const session = supabase.auth.session();

@@ -65,6 +65,7 @@ export default {
       );
       console.log("DATA: " + JSON.stringify(data));
       console.log("ERROR: " + JSON.stringify(error));
+      this.$router.push({ path: "/" });
     },
   },
 };

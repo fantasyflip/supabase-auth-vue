@@ -1,9 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
+import { supabase } from "@/plugins/supabase/supabase.js";
+import { getParameterByName } from "@/plugins/supabase/helpers";
+
 import Profile from "../views/Profile.vue";
 import Auth from "../views/Auth.vue";
 import ResetPassword from "../views/ResetPassword.vue";
-import { supabase } from "@/plugins/supabase/supabase.js";
 
 Vue.use(VueRouter);
 
@@ -35,33 +38,45 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.authRequired) {
+  let toUrl = location.origin + to.fullPath;
+  const requestType = getParameterByName("type", toUrl);
+
+  console.log(toUrl);
+
+  if (requestType === "signup") {
+    const accessToken = getParameterByName("access_token", toUrl);
+    const { user, error } = supabase.auth.setAuth(accessToken);
+    console.log("USER setAuth: " + JSON.stringify(user));
+    console.log("ERROR setAuth: " + JSON.stringify(error));
+    console.log(supabase.auth.session());
     if (supabase.auth.session()) {
-      next();
+      next({ path: "/", query: { signup: "success" } });
     } else {
       next({ path: "/auth" });
+      alert("E-Mail-Confirmation failed!");
     }
+  } else if (requestType === "recovery") {
+    const accessToken = getParameterByName("access_token", toUrl);
+    next({ path: "resetPassword", query: { token: accessToken } });
   } else {
-    if (to.path === "/auth") {
+    if (to.meta.authRequired) {
       if (supabase.auth.session()) {
-        next({ path: "/" });
+        next();
+      } else {
+        next({ path: "/auth" });
+      }
+    } else {
+      if (to.path === "/auth") {
+        if (supabase.auth.session()) {
+          next({ path: "/" });
+        } else {
+          next();
+        }
       } else {
         next();
       }
-    } else {
-      next();
     }
   }
-  // if (to.path != "/auth" || to.path != "/resetPassword") {
-  //   console.log("SESSION: " + JSON.stringify(supabase.auth.session()));
-  //   if (!supabase.auth.session()) {
-  //     console.log("auth now");
-  //     next({ path: "/auth" });
-  //   }
-  // }
-  // if (to.path === "/auth") {
-  //   next();
-  // }
 });
 
 export default router;
