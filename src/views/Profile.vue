@@ -18,7 +18,11 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field label="New E-Mail" v-model="newEmail"></v-text-field>
+          <v-text-field
+            label="New E-Mail"
+            v-model="newEmail"
+            @keyup.enter="handleEmailChange"
+          ></v-text-field>
           <v-btn
             color="primary"
             :disabled="newEmail === ''"
@@ -47,6 +51,9 @@ export default {
   mounted() {
     if (this.$route.query.signup === "success") {
       alert("Succesfully confirmed E-Mail!");
+    }
+    if (this.$route.query.emailChange === "success") {
+      alert("Succesfully changed E-Mail!");
     }
   },
   methods: {

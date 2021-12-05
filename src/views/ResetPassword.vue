@@ -23,6 +23,7 @@
               <v-text-field
                 label="Repeat New Password"
                 v-model="newPassword2"
+                @keyup.enter="handleNewPassword"
               ></v-text-field>
             </v-col>
           </v-row>

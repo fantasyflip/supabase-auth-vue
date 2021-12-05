@@ -33,6 +33,7 @@
                 label="Password"
                 v-model="register.password2"
                 type="password"
+                @keyup.enter="handleSignUp"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -71,6 +72,7 @@
                 label="Password"
                 v-model="login.password"
                 type="password"
+                @keyup.enter="handleLogIn"
               ></v-text-field>
             </v-col>
           </v-row>

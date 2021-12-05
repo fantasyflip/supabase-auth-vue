@@ -43,7 +43,19 @@ router.beforeEach((to, from, next) => {
 
   console.log(toUrl);
 
-  if (requestType === "signup") {
+  if (requestType === "email_change") {
+    const accessToken = getParameterByName("access_token", toUrl);
+    const { user, error } = supabase.auth.setAuth(accessToken);
+    console.log("USER setAuth: " + JSON.stringify(user));
+    console.log("ERROR setAuth: " + JSON.stringify(error));
+    console.log(supabase.auth.session());
+    if (supabase.auth.session()) {
+      next({ path: "/", query: { emailChange: "success" } });
+    } else {
+      next({ path: "/" });
+      alert("E-Mail-Change failed!");
+    }
+  } else if (requestType === "signup") {
     const accessToken = getParameterByName("access_token", toUrl);
     const { user, error } = supabase.auth.setAuth(accessToken);
     console.log("USER setAuth: " + JSON.stringify(user));
