@@ -153,13 +153,28 @@ export default {
   },
   methods: {
     handleSignUp: async function () {
-      const { user, session, error } = await supabase.auth.signUp({
-        email: this.register.email,
-        password: this.register.password,
-      });
-      console.log("USER: " + JSON.stringify(user));
-      console.log("SESSION: " + JSON.stringify(session));
-      console.log("ERROR: " + JSON.stringify(error));
+      if (this.$dev) {
+        const { user, session, error } = await supabase.auth.signUp(
+          {
+            email: this.register.email,
+            password: this.register.password,
+          },
+          {
+            redirectTo: "http://localhost:8080",
+          }
+        );
+        console.log("USER: " + JSON.stringify(user));
+        console.log("SESSION: " + JSON.stringify(session));
+        console.log("ERROR: " + JSON.stringify(error));
+      } else {
+        const { user, session, error } = await supabase.auth.signUp({
+          email: this.register.email,
+          password: this.register.password,
+        });
+        console.log("USER: " + JSON.stringify(user));
+        console.log("SESSION: " + JSON.stringify(session));
+        console.log("ERROR: " + JSON.stringify(error));
+      }
     },
     handleLogIn: async function () {
       const { user, session, error } = await supabase.auth.signIn({
@@ -181,12 +196,26 @@ export default {
       console.log("ERROR: " + JSON.stringify(error));
     },
     handleProviderLogin: async function (provider) {
-      const { user, session, error } = await supabase.auth.signIn({
-        provider: provider,
-      });
-      console.log("USER: " + JSON.stringify(user));
-      console.log("SESSION: " + JSON.stringify(session));
-      console.log("ERROR: " + JSON.stringify(error));
+      if (this.$dev) {
+        const { user, session, error } = await supabase.auth.signIn(
+          {
+            provider: provider,
+          },
+          {
+            redirectTo: "http://localhost:8080",
+          }
+        );
+        console.log("USER: " + JSON.stringify(user));
+        console.log("SESSION: " + JSON.stringify(session));
+        console.log("ERROR: " + JSON.stringify(error));
+      } else {
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: provider,
+        });
+        console.log("USER: " + JSON.stringify(user));
+        console.log("SESSION: " + JSON.stringify(session));
+        console.log("ERROR: " + JSON.stringify(error));
+      }
     },
   },
 };

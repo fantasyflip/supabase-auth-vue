@@ -5,6 +5,8 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$dev = Vue.config.devtools;
+
 const store = Vue.observable({
   session: null,
 });
