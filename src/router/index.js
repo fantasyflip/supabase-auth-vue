@@ -39,6 +39,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   let toUrl = location.origin + to.fullPath;
+  Vue.prototype.$globalState.session = supabase.auth.session();
+  supabase.auth.onAuthStateChange((event) => {
+    if (event === "SIGNED_IN") {
+      next({ path: "/" });
+    }
+  });
+  console.log(JSON.stringify(Vue.prototype.$globalState));
   const requestType = getParameterByName("type", toUrl);
 
   if (requestType === "email_change") {
