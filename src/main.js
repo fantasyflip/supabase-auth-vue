@@ -5,6 +5,12 @@ import router from "./router";
 
 Vue.config.productionTip = false;
 
+const store = Vue.observable({
+  session: null,
+});
+
+Vue.prototype.$globalState = store;
+
 new Vue({
   vuetify,
   router,

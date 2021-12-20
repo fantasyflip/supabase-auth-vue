@@ -16,7 +16,7 @@
           <v-btn color="primary" @click="getUser">Log User</v-btn>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="!this.$globalState.session.provider_token">
         <v-col>
           <v-text-field
             label="New E-Mail"
@@ -36,6 +36,12 @@
           <v-btn color="primary" @click="handleSignOut">Sign-Out</v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <span class="font-weight-bold">Auth Provider: </span>
+          {{ this.$globalState.session.user.app_metadata.provider }}
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -49,6 +55,7 @@ export default {
     };
   },
   mounted() {
+    console.log(JSON.stringify(this.$globalState.session));
     if (this.$route.query.signup === "success") {
       alert("Succesfully confirmed E-Mail!");
     }

@@ -77,7 +77,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col class="d-flex justify-end">
               <v-btn
                 color="primary"
                 :disabled="login.email === ''"
@@ -85,8 +85,6 @@
                 >Forgot Password</v-btn
               >
             </v-col>
-          </v-row>
-          <v-row>
             <v-col>
               <v-btn
                 color="primary"
@@ -94,6 +92,41 @@
                 @click="handleLogIn"
                 >LogIn</v-btn
               >
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="d-flex align-center">
+              <v-divider></v-divider>
+            </v-col>
+            <v-col cols="3" class="d-flex justify-center">
+              <span>Or Login via Social Providers</span>
+            </v-col>
+            <v-col class="d-flex align-center">
+              <v-divider></v-divider>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="d-flex justify-center">
+              <v-btn @click="handleProviderLogin('discord')" class="mx-2">
+                Discord
+                <v-icon class="pl-2">mdi-discord</v-icon>
+              </v-btn>
+              <v-btn @click="handleProviderLogin('twitch')" class="mx-2">
+                Twitch
+                <v-icon class="pl-2">mdi-twitch</v-icon>
+              </v-btn>
+              <v-btn @click="handleProviderLogin('google')" class="mx-2">
+                Google
+                <v-icon class="pl-2">mdi-google</v-icon>
+              </v-btn>
+              <v-btn @click="handleProviderLogin('spotify')" class="mx-2">
+                Spotify
+                <v-icon class="pl-2">mdi-spotify</v-icon>
+              </v-btn>
+              <v-btn @click="handleProviderLogin('github')" class="mx-2">
+                GitHub
+                <v-icon class="pl-2">mdi-github</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -145,6 +178,14 @@ export default {
         this.login.email
       );
       console.log("DATA: " + JSON.stringify(data));
+      console.log("ERROR: " + JSON.stringify(error));
+    },
+    handleProviderLogin: async function (provider) {
+      const { user, session, error } = await supabase.auth.signIn({
+        provider: provider,
+      });
+      console.log("USER: " + JSON.stringify(user));
+      console.log("SESSION: " + JSON.stringify(session));
       console.log("ERROR: " + JSON.stringify(error));
     },
   },
