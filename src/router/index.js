@@ -45,7 +45,6 @@ router.beforeEach((to, from, next) => {
       next({ path: "/" });
     }
   });
-  console.log(JSON.stringify(Vue.prototype.$globalState));
   const requestType = getParameterByName("type", toUrl);
 
   if (requestType === "email_change") {

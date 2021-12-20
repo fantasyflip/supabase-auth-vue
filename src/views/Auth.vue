@@ -118,6 +118,12 @@
                 <v-icon class="pl-2">mdi-twitch</v-icon>
               </v-btn>
             </v-col>
+            <v-col class="d-flex justify-center">
+              <v-btn @click="handleProviderLogin('google')">
+                Google
+                <v-icon class="pl-2">mdi-google</v-icon>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
       </v-col>
