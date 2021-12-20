@@ -112,6 +112,12 @@
                 <v-icon class="pl-2">mdi-discord</v-icon>
               </v-btn>
             </v-col>
+            <v-col class="d-flex justify-center">
+              <v-btn @click="handleProviderLogin('twitch')">
+                Twitch
+                <v-icon class="pl-2">mdi-twitch</v-icon>
+              </v-btn>
+            </v-col>
           </v-row>
         </v-container>
       </v-col>
