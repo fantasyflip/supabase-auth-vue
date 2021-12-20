@@ -25,7 +25,7 @@ const routes = [
   },
   {
     path: "/resetPassword",
-    name: "resetPassword",
+    name: "ResetPassword",
     component: ResetPassword,
     meta: { authRequired: false },
   },
@@ -70,11 +70,17 @@ router.beforeEach((to, from, next) => {
         next({ path: "/auth" });
       }
     } else {
-      if (to.path === "/auth") {
+      if (to.name === "Auth") {
         if (supabase.auth.session()) {
           next({ path: "/" });
         } else {
           next();
+        }
+      } else if (to.name === "ResetPassword") {
+        if (to.query && to.query.token) {
+          next();
+        } else {
+          next({ path: "/" });
         }
       } else {
         next();
