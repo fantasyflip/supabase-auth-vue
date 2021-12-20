@@ -36,6 +36,12 @@
           <v-btn color="primary" @click="handleSignOut">Sign-Out</v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <span class="font-weight-bold">Auth Provider: </span>
+          {{ this.$globalState.session.user.app_metadata.provider }}
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
